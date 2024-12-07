@@ -17,14 +17,15 @@ export default function Chat() {
 
     const mutation = useMutation({
         mutationFn: async (text: string) => {
-            const encodedAgentId = agentId.includes('://') 
+            const encodedAgentId = agentId.includes('://')
                 ? encodeURIComponent(agentId)
                 : agentId;
                 
-            const res = await fetch(`/api/${encodedAgentId}/message`, {
+            const res = await fetch(`https://e8fc-49-47-129-90.ngrok-free.app/api/${encodedAgentId}/message`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "ngrok-skip-browser-warning": "true"  // Add this header
                 },
                 body: JSON.stringify({
                     text,
