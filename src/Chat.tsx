@@ -11,13 +11,17 @@ type TextResponse = {
 };
 
 export default function Chat() {
-    const agentId = "ed1b8d80-793e-00c0-a08e-8a8508a8dd80";
+    const agentId = "964d1ca6-29f9-00e0-b2c6-b16caf5bbed7";
     const [input, setInput] = useState("");
     const [messages, setMessages] = useState<TextResponse[]>([]);
 
     const mutation = useMutation({
         mutationFn: async (text: string) => {
-            const res = await fetch(`/api/${agentId}/message`, {
+            const encodedAgentId = agentId.includes('://') 
+                ? encodeURIComponent(agentId)
+                : agentId;
+                
+            const res = await fetch(`/api/${encodedAgentId}/message`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
