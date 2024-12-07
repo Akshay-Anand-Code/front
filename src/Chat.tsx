@@ -11,21 +11,20 @@ type TextResponse = {
 };
 
 export default function Chat() {
-    const agentId = "964d1ca6-29f9-00e0-b2c6-b16caf5bbed7";
+    const agentId = "b850bc30-45f8-0041-a00a-83df46d8555d";
     const [input, setInput] = useState("");
     const [messages, setMessages] = useState<TextResponse[]>([]);
 
     const mutation = useMutation({
         mutationFn: async (text: string) => {
-            const encodedAgentId = agentId.includes('://')
+            const encodedAgentId = agentId.includes('://') 
                 ? encodeURIComponent(agentId)
                 : agentId;
                 
-            const res = await fetch(`https://e8fc-49-47-129-90.ngrok-free.app/api/${encodedAgentId}/message`, {
+            const res = await fetch(`/api/${encodedAgentId}/message`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "ngrok-skip-browser-warning": "true"  // Add this header
                 },
                 body: JSON.stringify({
                     text,
